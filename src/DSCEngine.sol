@@ -31,6 +31,7 @@ contract DSCEngine is ReentrancyGuard {
     mapping(address token => address priceFeed) private s_priceFeeds;
     DecentralizedStableCoin private immutable i_dsc;
     mapping(address user => mapping(address token => uint256 amount)) private s_collateralDeposited;
+    mapping(address user => uint256 amountDscMinted) private s_DscMinted;
 
     //////////////////
     //   Events   //
@@ -88,7 +89,9 @@ contract DSCEngine is ReentrancyGuard {
     * @param amountCollateral: The amount of collateral you're depositing
     */
 
-   function depositCollateral(address tokenCollateralAddress, uint256 amountCollateral) 
+   function depositCollateral(
+    address tokenCollateralAddress, 
+    uint256 amountCollateral) 
    external moreThanZero(amountCollateral) 
    isAllowedToken(tokenCollateralAddress) nonReentrant {
         s_collateralDeposited[msg.sender][tokenCollateralAddress] += amountCollateral;
@@ -99,4 +102,38 @@ contract DSCEngine is ReentrancyGuard {
             revert DSCEngine__TransferFailed();
         }
    }
+
+   /**
+    * @param amountDscToMint: The amount of DSC you want to mint
+    * You can only mint DSC if you hav enough collateral
+    */
+   function mintDsc(uint256 amountDscToMint) public moreThanZero(amountDscToMint) nonReentrant {
+        s_DscMinted[msg.sender] += amountDscToMint;
+   }
+
+   ///////////////////////////////////////////
+   //   Private & Internal View Functions   //
+   ///////////////////////////////////////////
+
+   function _revertIfHealthFactorIsBroken(address user) internal view {}
+
+   /*
+    * Returns how close to liquidation a user is
+    * If a user goes below 1, then they can be liquidated.
+    */
+   function _healthFactor(address user) internal view returns (uint256) {}
+
+   function getAccountInformation(address user) private view returns (
+    uint256 totalDscMinted,
+    uint256 totalCollateralValue
+   ) {
+    totalDscMinted = s_DscMinted[user];
+    totalCollateralValue = getAccountCollateralValue(user);
+   }
+
+
+    //////////////////////////////////////////
+    //   Public & External View Functions   //
+    //////////////////////////////////////////
+    function getAccountCollateralValue(address user) public pure {} 
 }
