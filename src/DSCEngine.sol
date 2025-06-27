@@ -25,7 +25,7 @@ contract DSCEngine is ReentrancyGuard {
     error DSCEngine__TokenNotAllowed(address token);
     error DSCEngine__TransferFailed();
     error DSCEngine__BreaksHealthFactor(uint256 healthFactor);
-    revert DSCEngine__MintFailed();
+    error DSCEngine__MintFailed();
 
     /////////////////////////
     //   State Variables   //
