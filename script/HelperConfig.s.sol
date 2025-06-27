@@ -36,7 +36,7 @@ contract HelperConfig is Script {
             wbtcUsdPriceFeed: 0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43,
             weth: 0xdd13E55209Fd76AfE204dBda4007C227904f0a81,
             wbtc: 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063,
-            deployerKey: vm.envUint("PRIVATE_KEY")
+            deployerKey: address(uint160(vm.envUint("PRIVATE_KEY")))
         });
     }
 
@@ -58,7 +58,7 @@ contract HelperConfig is Script {
         weth: address(wethMock),
         wbtcUsdPriceFeed: address(btcUsdPriceFeed),
         wbtc: address(wbtcMock),
-        deployerKey: DEFAULT_ANVIL_PRIVATE_KEY
+        deployerKey: address(uint160(DEFAULT_ANVIL_PRIVATE_KEY))
         });
     }
 }
