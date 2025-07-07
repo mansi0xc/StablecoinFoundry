@@ -103,4 +103,13 @@ contract DSCEngineTest is Test {
         assertEq(expectedDepositedAmount, AMOUNT_COLLATERAL);
     }
 
+    function testChainID() public {
+        uint256 chainID = block.chainid;
+        console.log("Chain ID:", chainID);
+        assertEq(chainID, 31337, "Chain ID should be Anvil testnet (31337)");
+        // assertEq(chainID, 11155111, "Chain ID should be Anvil testnet (31337)");
+        // test this using the command:
+        // $ forge test --mt testChainID --fork-url https://sepolia.drpc.org
+    }
+
 }
