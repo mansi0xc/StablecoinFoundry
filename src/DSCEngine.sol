@@ -46,7 +46,7 @@ contract DSCEngine is ReentrancyGuard {
     uint256 private constant MIN_HEALTH_FACTOR = 1e18;
 
     //////////////////
-    //   Events   //
+    ///   Events   ///
     //////////////////
     event collateralDeposited(address indexed user, address indexed token, uint256 indexed amount);
     // event CollateralRedeemed(address indexed user, address indexed token, uint256 indexed amount);
@@ -254,13 +254,13 @@ contract DSCEngine is ReentrancyGuard {
     * If a user goes below 1, then they can be liquidated.
     */
     function _healthFactor(address user) internal view returns (uint256) {
-        (uint256 totalDscMinted, uint256 collateralValueInUsd) = getAccountInformation(user);
+        (uint256 totalDscMinted, uint256 collateralValueInUsd) = _getAccountInformation(user);
         uint256 collateralAdjustedForThreshold = (collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION;
 
         return (collateralAdjustedForThreshold * PRECISION) / totalDscMinted;
     }
 
-    function getAccountInformation(address user)
+    function _getAccountInformation(address user)
         private
         view
         returns (uint256 totalDscMinted, uint256 totalCollateralValue)
@@ -289,5 +289,13 @@ contract DSCEngine is ReentrancyGuard {
         (, int256 price,,,) = priceFeed.latestRoundData();
 
         return ((uint256(price) * ADDITIONAL_FEED_PRECISION) * amount) / PRECISION;
+    }
+
+    function getAccountInformation(address user)
+        external
+        view
+        returns (uint256 totalDscMinted, uint256 collateralValueInUsd)
+    {
+        return _getAccountInformation(user);
     }
 }
