@@ -1,0 +1,50 @@
+Compiling 36 files with Solc 0.8.28
+Solc 0.8.28 finished in 2.98s
+Compiler run successful with warnings:
+Warning (2072): Unused local variable.
+  --> script/DeployDSC.s.sol:16:90:
+   |
+16 |         (address wethUsdPriceFeed, address wbtcUsdPriceFeed, address weth, address wbtc, address deployerKey) =
+   |                                                                                          ^^^^^^^^^^^^^^^^^^^
+
+Warning (2018): Function state mutability can be restricted to view
+  --> test/unit/DSCEngine.t.sol:55:5:
+   |
+55 |     function testGetTokenAmountFromUsd() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2018): Function state mutability can be restricted to view
+  --> test/unit/DSCEngine.t.sol:62:5:
+   |
+62 |     function testGetUsdValue() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Analysing contracts...
+Running tests...
+
+Ran 6 tests for test/unit/DSCEngine.t.sol:DSCEngineTest
+[PASS] testCanDepositedCollateralAndGetAccountInfo() (gas: 132376)
+[PASS] testGetTokenAmountFromUsd() (gas: 28754)
+[PASS] testGetUsdValue() (gas: 28697)
+[PASS] testRevertsIfCollateralZero() (gas: 43313)
+[PASS] testRevertsIfTokenLengthDoesntMatchPriceFeeds() (gas: 184647)
+[PASS] testRevertsWithUnapprovedCollateral() (gas: 952743)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 8.32ms (6.98ms CPU time)
+
+Ran 1 test suite in 13.64ms (8.32ms CPU time): 6 tests passed, 0 failed, 0 skipped (6 total tests)
+
+╭---------------------------------+-----------------+-----------------+---------------+----------------╮
+| File                            | % Lines         | % Statements    | % Branches    | % Funcs        |
++======================================================================================================+
+| script/DeployDSC.s.sol          | 100.00% (12/12) | 100.00% (14/14) | 100.00% (0/0) | 100.00% (1/1)  |
+|---------------------------------+-----------------+-----------------+---------------+----------------|
+| script/HelperConfig.s.sol       | 75.00% (12/16)  | 82.35% (14/17)  | 33.33% (1/3)  | 66.67% (2/3)   |
+|---------------------------------+-----------------+-----------------+---------------+----------------|
+| src/DSCEngine.sol               | 37.36% (34/91)  | 38.54% (37/96)  | 18.18% (2/11) | 38.89% (7/18)  |
+|---------------------------------+-----------------+-----------------+---------------+----------------|
+| src/DecentralizedStableCoin.sol | 0.00% (0/14)    | 0.00% (0/13)    | 0.00% (0/4)   | 0.00% (0/2)    |
+|---------------------------------+-----------------+-----------------+---------------+----------------|
+| test/mocks/MockV3Aggregator.sol | 52.17% (12/23)  | 52.94% (9/17)   | 100.00% (0/0) | 50.00% (3/6)   |
+|---------------------------------+-----------------+-----------------+---------------+----------------|
+| Total                           | 44.87% (70/156) | 47.13% (74/157) | 16.67% (3/18) | 43.33% (13/30) |
+╰---------------------------------+-----------------+-----------------+---------------+----------------╯
