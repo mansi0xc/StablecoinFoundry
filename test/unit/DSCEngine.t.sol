@@ -112,4 +112,21 @@ contract DSCEngineTest is Test {
         // $ forge test --mt testChainID --fork-url https://sepolia.drpc.org
     }
 
+    function testDepositCollateral() public {
+        vm.startPrank(USER);
+        ERC20Mock(weth).approve(address(dsce), AMOUNT_COLLATERAL);
+        dsce.depositCollateral(weth, 10 ether);
+        vm.stopPrank();
+
+        uint256 userBalance = ERC20Mock(weth).balanceOf(USER);
+        uint256 contractBalance = ERC20Mock(weth).balanceOf(address(dsce));
+
+        (, uint256 actualWETHCalculated) = dsce.getAccountInformation(USER);
+        console.log("User's actual WETH calculated : ", actualWETHCalculated);
+        console.log("User's WETH balance: ", userBalance);
+
+        assertEq(userBalance, STARTING_ERC20_BALANCE - AMOUNT_COLLATERAL, "User should have less WETH");
+        assertEq(contractBalance, AMOUNT_COLLATERAL, "Contract should hold the deposited WETH");
+    }
+
 }
