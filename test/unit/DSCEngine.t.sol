@@ -129,4 +129,24 @@ contract DSCEngineTest is Test {
         assertEq(contractBalance, AMOUNT_COLLATERAL, "Contract should hold the deposited WETH");
     }
 
+    function testMintDSC() public depositedCollateral {
+        vm.startPrank(USER);
+        uint256 dscAmount = 1000e18;
+        dsce.mintDsc(dscAmount);
+        vm.stopPrank();
+
+        uint256 userDscBalance = dsc.balanceOf(USER);
+        assertEq(userDscBalance, dscAmount, "User should have minted 1000 DSC");
+    }
+
+    function testDepositCollateralAndMintDsc() public depositedCollateral {
+        vm.startPrank(USER);
+        uint256 dscAmount = 1000e18;
+        dsce.mintDsc(dscAmount);
+        vm.stopPrank();
+
+        uint256 userDscBalance = dsc.balanceOf(USER);
+        assertEq(userDscBalance, dscAmount, "User should have minted 1000 DSC");
+    }
+
 }
